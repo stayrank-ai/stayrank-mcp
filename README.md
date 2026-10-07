@@ -40,7 +40,7 @@ Stayrank never edits your Airbnb listing: you apply each change yourself, Stayra
 **Claude Code:**
 
 ```bash
-claude plugin marketplace add Natha1627/stayrank-mcp
+claude plugin marketplace add stayrank-ai/stayrank-mcp
 claude plugin install stayrank@stayrank
 ```
 
