@@ -1,0 +1,17 @@
+{
+  "name": "stayrank-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Validation tooling for the Stayrank plugins. The plugins themselves have no runtime dependency.",
+  "license": "MIT",
+  "scripts": {
+    "validate": "claude plugin validate ./plugins/stayrank --strict && claude plugin validate . --strict",
+    "package": "python scripts/package.py"
+  },
+  "devDependencies": {
+    "@anthropic-ai/claude-code": "2.1.293"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

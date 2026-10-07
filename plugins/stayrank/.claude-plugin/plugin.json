@@ -16,5 +16,10 @@
     "hosts",
     "vacation-rental"
   ],
-  "repository": "https://github.com/stayrank-ai/stayrank-mcp"
+  "repository": "https://github.com/stayrank-ai/stayrank-mcp",
+  "icon": "./assets/icon.png",
+  "privacyPolicyUrl": "https://www.stayrank.ai/en/confidentialite",
+  "termsOfServiceUrl": "https://www.stayrank.ai/en/cgu",
+  "supportUrl": "https://www.stayrank.ai/mcp#support",
+  "documentationUrl": "https://www.stayrank.ai/mcp"
 }

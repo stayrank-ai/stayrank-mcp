@@ -66,13 +66,15 @@ plugins/stayrank/
   assets/                           Icon and logo
 scripts/package.py                  Builds dist/stayrank-chatgpt.zip and dist/stayrank-claude.zip
 scripts/build_openai_zip.py         Checks the ChatGPT package against OpenAI's submission rules
+package.json, package-lock.json     Pinned validation tooling (no runtime dependency)
 ```
 
-Build locally:
+Build locally (Node 22+ and Python 3; the only dependency is the official Claude CLI, pinned in `package-lock.json`):
 
 ```bash
+npm ci
+npm run validate
 python scripts/package.py
-claude plugin validate ./plugins/stayrank --strict
 ```
 
 Every push is validated by CI; every `v*` tag publishes both zips as a release.

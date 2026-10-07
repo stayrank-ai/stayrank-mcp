@@ -12,53 +12,62 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # A fixed image: no silent change of runner under the build.
+    runs-on: ubuntu-24.04
     steps:
       # Actions pinned to a full commit SHA: a moved or hijacked tag cannot change what runs here.
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: "22"
+          node-version: "24"
+          cache: npm
 
       - name: Validate JSON manifests
         run: |
-          for f in .claude-plugin/marketplace.json plugins/stayrank/.claude-plugin/plugin.json plugins/stayrank/.mcp.json plugins/stayrank/.openai/plugin.json plugins/stayrank/.openai/mcp.json; do
+          for f in package.json .claude-plugin/marketplace.json plugins/stayrank/.claude-plugin/plugin.json plugins/stayrank/.mcp.json plugins/stayrank/.openai/plugin.json plugins/stayrank/.openai/mcp.json; do
             python -m json.tool "$f" > /dev/null && echo "ok  $f"
           done
 
-      - name: Validate the Claude plugin and marketplace (official CLI, pinned version)
+      # Exact versions and integrity hashes from package-lock.json; the audit fails the build on any known vulnerability.
+      - name: Install the pinned validation tooling
         run: |
-          npm install -g @anthropic-ai/claude-code@2.1.292
-          claude plugin validate ./plugins/stayrank --strict
-          claude plugin validate . --strict
+          npm ci --no-fund
+          npm audit --audit-level=low
+
+      - name: Validate the Claude plugin and marketplace (official CLI)
+        env:
+          # The CLI prints Node deprecation notices from its own bundle; they are not about this repository.
+          NODE_OPTIONS: --no-deprecation
+        run: npm run validate
 
       - name: Build both packages (ChatGPT package checked against OpenAI's rules)
         run: python scripts/package.py
 
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: stayrank-plugins
           path: dist/*.zip
+          if-no-files-found: error
 
   release:
     needs: build
     if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
