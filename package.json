@@ -13,5 +13,8 @@
   },
   "engines": {
     "node": ">=22"
+  },
+  "allowScripts": {
+    "@anthropic-ai/claude-code@2.1.293": true
   }
 }
