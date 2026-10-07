@@ -1,0 +1,20 @@
+{
+  "name": "stayrank",
+  "displayName": "Stayrank",
+  "version": "1.0.0",
+  "description": "Score an Airbnb listing out of 100, rank the fixes by impact, work through the action plan, compare with neighbors and retouch photos, from a conversation. Works with your Stayrank account.",
+  "author": {
+    "name": "Stayrank",
+    "url": "https://www.stayrank.ai"
+  },
+  "homepage": "https://www.stayrank.ai/mcp",
+  "license": "MIT",
+  "keywords": [
+    "airbnb",
+    "short-term-rental",
+    "listing-optimization",
+    "hosts",
+    "vacation-rental"
+  ],
+  "repository": "https://github.com/Natha1627/stayrank-mcp"
+}

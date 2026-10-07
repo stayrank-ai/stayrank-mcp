@@ -1,0 +1,61 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "stayrank",
+  "version": "1.0.0",
+  "description": "Score an Airbnb listing out of 100, rank the fixes by impact, work through the action plan, compare with neighbors and retouch photos, from a conversation. Works with your Stayrank account.",
+  "author": {
+    "name": "Stayrank",
+    "email": "support@stayrank.ai",
+    "url": "https://www.stayrank.ai"
+  },
+  "homepage": "https://www.stayrank.ai/mcp",
+  "license": "MIT",
+  "keywords": ["airbnb", "short-term-rental", "listing-optimization", "hosts", "vacation-rental"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Stayrank",
+        "shortDescription": "Score and fix Airbnb listings",
+        "longDescription": "Stayrank scores an Airbnb listing out of 100 on seven axes and ranks the fixes by impact. From the conversation you can add a listing by its URL, read its full report (strengths, ready-to-paste texts, booking settings worth checking, comparison with the listings that rank around it), work through the action plan and mark fixes done, and retouch the listing's photos in one go or one by one. Before an analysis uses your balance, the plugin shows what it will use and asks for your confirmation. Stayrank never edits your Airbnb listing: you apply each change yourself. The plugin only reads and writes the data of the Stayrank account you connect.",
+        "developerName": "Stayrank",
+        "category": "Business & Operations",
+        "capabilities": ["Score listings", "Rank fixes", "Action plan", "Competitor comparison", "Photo retouching"],
+        "websiteURL": "https://www.stayrank.ai",
+        "supportURL": "https://www.stayrank.ai/mcp#support",
+        "privacyPolicyURL": "https://www.stayrank.ai/en/confidentialite",
+        "termsOfServiceURL": "https://www.stayrank.ai/en/cgu",
+        "defaultPrompt": [
+          "What is the score of my Airbnb listing and what should I fix first?",
+          "List the actions I still have to do on my listings.",
+          "Improve the photos of my listing."
+        ],
+        "brandColor": "#6A4CFF",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/logo.png"
+      },
+      "onboardingSkill": "./skills/get-started/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            { "description": "Score of an analysed listing", "prompt": "What is the score of my Airbnb listing and what should I fix first?", "tools_triggered": "list_listings, get_listing_report", "expected_behavior": "Returns the score out of 100, the strengths and the top fixes ranked by impact for a listing of the test account." },
+            { "description": "Pending actions", "prompt": "List the actions I still have to do on my listings.", "tools_triggered": "list_actions", "expected_behavior": "Lists the open actions of the test account with their listing and impact." },
+            { "description": "Mark an action done", "prompt": "I changed the title as suggested, mark it done.", "tools_triggered": "list_actions, complete_action", "expected_behavior": "Marks the matching action done and confirms its new status." },
+            { "description": "Quote before analysis", "prompt": "Analyze this Airbnb listing: https://www.airbnb.com/rooms/123456", "tools_triggered": "add_listing, quote_analysis", "expected_behavior": "Adds the listing, shows what the analysis will use from the balance and waits for confirmation without running it." },
+            { "description": "Remaining balance", "prompt": "How many analyses and photo retouches do I have left?", "tools_triggered": "get_account", "expected_behavior": "States the remaining listings and photo retouches of the test account, with no purchase link." }
+          ],
+          "negative": [
+            { "description": "Purchase", "prompt": "Buy me 100 more analyses." },
+            { "description": "Editing Airbnb directly", "prompt": "Change the title of my listing directly on Airbnb." },
+            { "description": "Another user's data", "prompt": "Show me the listings of another Stayrank user." }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products, credits or subscriptions and has no checkout. It only uses the balance already present in the connected Stayrank account."
+      },
+      "publication": {
+        "countries": ["FR", "BE", "CH", "US", "GB", "CA", "ES", "IT", "DE", "PT", "NL"],
+        "release_notes": "Initial release: listing score and report, action plan, competitor comparison, booking settings, photo retouching."
+      }
+    }
+  }
+}

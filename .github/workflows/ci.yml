@@ -1,0 +1,54 @@
+name: Validate and package
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate JSON manifests
+        run: |
+          for f in .claude-plugin/marketplace.json plugins/stayrank/.claude-plugin/plugin.json plugins/stayrank/.mcp.json plugins/stayrank/.openai/plugin.json plugins/stayrank/.openai/mcp.json; do
+            python -m json.tool "$f" > /dev/null && echo "ok  $f"
+          done
+
+      - name: Validate the Claude plugin and marketplace (official CLI)
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude plugin validate ./plugins/stayrank --strict
+          claude plugin validate . --strict
+
+      - name: Build both packages (ChatGPT package checked against OpenAI's rules)
+        run: python scripts/package.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stayrank-plugins
+          path: dist/*.zip
+
+      - name: Attach the zips to the release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/stayrank-chatgpt.zip dist/stayrank-claude.zip \
+            --title "Stayrank $GITHUB_REF_NAME" \
+            --notes "Plugin packages for ChatGPT (stayrank-chatgpt.zip) and Claude (stayrank-claude.zip). Server: https://www.stayrank.ai/api/mcp" \
+            || gh release upload "$GITHUB_REF_NAME" dist/*.zip --clobber

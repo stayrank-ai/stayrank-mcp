@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "stayrank": {
+      "type": "http",
+      "url": "https://www.stayrank.ai/api/mcp"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "stayrank",
+  "owner": {
+    "name": "Stayrank",
+    "email": "support@stayrank.ai"
+  },
+  "metadata": {
+    "description": "Stayrank for Claude: score, fix and retouch Airbnb listings from the conversation."
+  },
+  "plugins": [
+    {
+      "name": "stayrank",
+      "source": "./plugins/stayrank",
+      "description": "Score an Airbnb listing out of 100, rank the fixes by impact, work through the action plan, compare with neighbors and retouch photos.",
+      "version": "1.0.0",
+      "category": "productivity",
+      "homepage": "https://www.stayrank.ai/mcp"
+    }
+  ]
+}
