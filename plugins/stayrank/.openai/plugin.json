@@ -35,6 +35,7 @@
       },
       "onboardingSkill": "./skills/get-started/SKILL.md",
       "review": {
+        "demo_recording_url": "https://www.stayrank.ai/videos/stayrank-walkthrough.mp4",
         "test_cases": {
           "positive": [
             { "description": "Score of an analysed listing", "prompt": "What is the score of my Airbnb listing and what should I fix first?", "tools_triggered": "list_listings, get_listing_report", "expected_behavior": "Returns the score out of 100, the strengths and the top fixes ranked by impact for a listing of the test account." },
@@ -54,7 +55,7 @@
       },
       "publication": {
         "countries": ["FR", "BE", "CH", "US", "GB", "CA", "ES", "IT", "DE", "PT", "NL"],
-        "release_notes": "Initial release: listing score and report, action plan, competitor comparison, booking settings, photo retouching."
+        "release_notes": "Share a read-only link to a finished report and revoke it at any time, download the report as a PDF, and connect your account through a simpler sign-in and consent screen."
       }
     }
   }

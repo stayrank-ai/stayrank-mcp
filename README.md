@@ -17,6 +17,8 @@ https://www.stayrank.ai/api/mcp
 
 Everything except creating your account and paying happens in the conversation.
 
+[Watch the 2-minute walkthrough in ChatGPT](https://www.stayrank.ai/videos/stayrank-walkthrough.mp4)
+
 ## What you can ask
 
 - *"Analyze this Airbnb listing: https://www.airbnb.com/rooms/…"*: adds the listing, shows the free preview, quotes the full analysis and waits for your confirmation before using your balance.

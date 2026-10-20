@@ -20,6 +20,8 @@ Stayrank never edits your Airbnb listing: you apply each change yourself, Stayra
 
 Full guide: https://www.stayrank.ai/mcp
 
+Video walkthrough: https://www.stayrank.ai/videos/stayrank-walkthrough.mp4
+
 ## Support
 
 support@stayrank.ai

@@ -213,6 +213,8 @@ def main(root, out):
                 E("review.negative", "champ %s manquant" % k)
     if not rv.get("demo_recording_url"):
         W("review", "demo_recording_url manquant (requis avant soumission)")
+    elif not https(rv["demo_recording_url"]):
+        E("review.demo_recording_url", "URL HTTPS publique requise")
     if "test_credentials" in json.dumps(ox) or "reviewer_instructions" in json.dumps(ox):
         E("secret", "test_credentials/reviewer_instructions interdits dans le ZIP")
     files = []
