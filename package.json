@@ -9,7 +9,7 @@
     "package": "python scripts/package.py"
   },
   "devDependencies": {
-    "@anthropic-ai/claude-code": "2.1.293"
+    "@anthropic-ai/claude-code": "2.1.310"
   },
   "engines": {
     "node": ">=22"
